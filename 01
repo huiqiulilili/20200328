@@ -1,0 +1,348 @@
+### 数据库MySQL
+
+ MySQL 是最流行的关系型数据库管理系统
+
+#### 1、什么是数据库
+
+ 数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。 
+
+数据库的分类：
+
+- 关系型数据库和非关系型数据库
+  - MySQL、 Oracle 、 SQLite  、DB2、Microsoft SQL Server
+- 非关系型数据库
+  -  MongoDb、redis、HBase 
+
+>  关系型数据库：**指采用了关系模型来组织数据的数据库。** 
+>
+>  ​	 	**关系模型指的就是二维表格模型，而一个关系型数据库就是由二维表及其之间的联系所组成的一个数据组织。** 
+>
+>  非关系型数据库： **指非关系型的，分布式的，且一般不保证遵循`ACID`原则的数据存储系统。** 
+>
+>  ​		 **非关系型数据库以键值对存储，且结构不固定，每一个元组可以有不一样的字段，每个元组可以根据需要增加一些自己的键值对，不局限于固定的结构，可以减少一些时间和空间的开销。** 
+
+#### 2、连接MySQL
+
+> mysql -uroot -p
+
+退出mysql
+
+> exit
+
+#### 3、操作数据库（DDL）
+
+博客关于mysql里面的  []  代表可以省略
+
+##### 3.1、创建数据库
+
+```mysql
+create database [if not exists] 数据库名;
+```
+
+##### 3.2、删除数据库
+
+```mysql
+drop [if exists] database 数据库名;
+```
+
+##### 3.3、查看所有数据库
+
+```mysql
+show databases;
+```
+
+##### 3.4、使用数据库
+
+```mysql
+use 数据库名;
+```
+
+#### 4、常见的数据类型
+
+##### 4.1、数值
+
+> tinyint         1个字节
+>
+> smallint      2个字节
+>
+> **int                4个字节**
+>
+> floate           4个字节
+>
+> **double        8个字节**
+>
+> **decimal      字符串形式的浮点数（一般用于金融）**
+
+##### 4.2、字符串
+
+> char           0~255
+>
+> varchar     可变字符串  0~65535
+>
+> tinytext     2^8 - 1  微型文本
+>
+> text            2^16 - 1 文本串
+
+##### 4.3、日期类型
+
+> data                YYYY-MM-DD
+>
+> time                HH:MM:SS 
+>
+> datatime        YYYY-MM-DD    HH:MM:SS 
+>
+> timestampt    时间戳
+
+##### 4.5、null
+
+- 没有值
+- 不要使用NULL 进行运算，如果使用，结果一定为NULL
+
+#### 5、数据库的字段说明
+
+##### 5.1、Unsigned
+
+- 无符号的整数
+- 声明了该列不能为负数
+
+##### 5.2、zerofill
+
+- 0填充的
+- 不足的位数，使用0来填充                int(3)  ，5 ----005
+
+##### 5.3、自增
+
+- 在原来的基础上加  + 1
+
+- 通常用来设计唯一的主键~  index，**必须为整数类型**
+
+- 可以自定义设计主键自增的起始和步长
+
+##### 5.4、非空  NULL 和   not   null
+
+- 假设设置为not null ，如果不给它赋值，就会报错!
+- NUII，如果不填写值，默认就是null!
+
+##### 5.5、默认
+
+- 设置默认的值!
+- sex,默认值为男，如果不指定该列的值，则会有默认的值!
+
+##### 5.6、外键
+
+- 一般用于一对多和多对一的情况
+
+- > 语法：
+  >
+  > alter table表add  constraint 约束名 foregin key (作为外键的列)  references 那个表(哪个字段)
+
+#### 6、数据库表（重点）
+
+##### 6.1、创建表
+
+```mysql 
+CREATE TABLE [IF NOT EXISTS] 表名(ITCAST_0001
+                                列名 列类型,
+                                列名 列类型,
+                                ...
+                                列名 列类型
+                               );
+```
+
+##### 6.2、删除表
+
+```mysql 
+DROP TABLE 表名;
+```
+
+##### 6.3、查看数据库中的表
+
+```mysql 
+show tables;
+```
+
+##### 6.4、查看表结构
+
+```mysql
+desc 表名;
+```
+
+##### 6.5、查看指定表的创建语句(了解)
+
+```mysql
+show create table 表名;
+
+```
+
+##### 6.6、修改表
+
+###### 6.6.1、修改表名
+
+```mysql 
+-- alter table 旧表名 rename to 新表名;
+alter table student rename to stu;
+
+```
+
+###### 6.6.2、添加列
+
+```mysql 
+-- alter table 表名 add (列名,列类型,
+--                   列名,列类型,
+--                   列名,列类型);
+                   
+-- alter table 表名 add 列名 列类型;
+
+alter table stu add age int(11);
+
+```
+
+###### 6.6.3、修改列类型
+
+```mysql 
+alter table 表名 modify 字段名 列属性[]
+alter table stu modify age varchar(11); -- 修改约束
+
+```
+
+###### 6.6.4、修改列名
+
+```mysql
+alter table 表名 change 原列名  新列名  列类型 
+
+```
+
+看到这里是不是感觉 change 也可以用来修改列类型，没错！是的，只需要让原列名和新列名相同即可！语句：
+
+```mysql 
+alter table stu change age age int; 
+
+```
+
+这里就会出现一个面试题：change 和 modify 的区别
+
+> change用来字段重命名，   能修改字段类型和约束； 
+>
+> modify不用来字段重命名，只能修改字段类型和约束； 
+
+###### 6.6.5、删除表的字段
+
+```mysql
+alter table 表名 drop 字段名;
+alter table student drop age1;
+
+```
+
+#### 7、数据库操作语言(DML)
+
+- insert
+- update
+
+- delete
+
+##### 7.1、添加（insert）
+
+###### 7.1.1、插入一条语句
+
+```mysql
+-- insert into 表名([字段名]) values(值1);
+insert into student(`name`) values('张三');
+
+```
+
+###### 7.1.2、插入多条语句
+
+```mysql
+-- insert into 表名([字段名,字段名]) values(值1),(值3);
+insert into student(`name`) values('张三'),('李四');
+
+```
+
+**语法**：`insert into 表名([字段名,字段名]) values(值1),(值3);`
+
+**注意事项：**
+
+1. 字段和字段之间使用英文逗号隔开！
+2. 字段是可以省略的，但是后面的值必须要要一一对应， 不能少!
+3. 可以同时插入多条数据，values 后面的值，需要使用，隔开即可`values()()...`
+
+##### 7.2、修改（update）
+
+###### 7.2.1、修改一个值
+
+````mysql 
+-- update 表名 set 列名 =新值 [where 条件]
+update student set `name`='陆柯燃' where id = 1;
+
+````
+
+###### 7.2.2、修改多个值(使用逗号隔开)
+
+```mysql
+update 表名 set 列名1=新值1,[列名2=新值2,......] where [条件]
+
+```
+
+条件: where子句运算符id等于某个值,大于某个值,在某个区间内修改...
+
+操作符会返回布尔值
+
+![1585322039304](C:\Users\惠秋丽\AppData\Roaming\Typora\typora-user-images\1585322039304.png)
+
+**语法**：`update 表名 set 列名1=新值1,[列名2=新值2,......] where [条件]`
+
+**注意**：
+
+- 数据库的列尽量带上``
+- 筛选的条件，如果没有指定，就会修改所有的列
+- 新值，是一个具体的值，也可以是一个变量（在写Java程序的时候）
+- 多个设置的属性之间，使用英文逗号隔开
+
+##### 7.3、删除（delete）
+
+```mysql
+-- 删除数据，这样写会全部删除的
+delete form 表名;
+
+-- 删除指定的数据
+delete from student id=1;
+
+```
+
+**语法**：`delete from student [where 条件];`
+
+------
+
+**删除的另一个命令：truncate**
+
+truncate命令的作用：完全清空一个数据库表,表的结构和索引约束不会变!
+
+```mysql
+-- 清空 student表
+truncate student;
+
+```
+
+聊聊这两个的区别truncate和delete：
+
+- 相同点：都能删除数据，但不能删除表结构
+- 不同
+  - truncate 重新设置 自增列 计数器会清零
+  - truncate 不会影响事务
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
