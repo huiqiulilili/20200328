@@ -1,0 +1,300 @@
+### 二叉树的相关计算
+
+#### 1、计算二叉树中节点的个数
+
+两种方法：
+
+- 利用遍历的思想
+
+- 利用汇总的思想
+
+  根 + 左子树 + 右子树
+
+**1、利用遍历的思想**
+
+```java
+private static int count = 0;
+public static int calcCount(Node root) {
+    if (root == null) {
+        return 0;
+    }
+    count++;
+    calcCount(root.left);
+    calcCount(root.right);
+    return count;
+}
+```
+
+**2、利用汇总的思想**
+
+```java
+public static int calcCount2(Node root) {
+    if(root == null) {
+        return 0;
+    }
+    int left = calcCount2(root.left);
+    int right = calcCount2(root.right);
+    return left+right+1;
+}
+```
+
+#### 2、计算叶子节点的个数
+
+两种方法：
+
+- 利用遍历的思想
+
+- 利用汇总的思想
+
+  根 + 左子树 + 右子树
+
+**1、利用遍历的思想**
+
+```java
+private static int count = 0;
+public static int calcLeafCount(Node root) {
+    if(root == null) {
+        return 0;
+    }
+    if(root.left == null && root.right == null) {
+        count++;
+    }
+    calcLeafCount(root.left);
+    calcLeafCount(root.right);
+    return count;
+}
+```
+
+**2、利用汇总的思想**
+
+```java
+public static int calcLeafCount(Node root) {
+    if (root == null) {
+        return 0;
+    }
+    if(root.left == null && root.right == null) {
+        return 1;
+    }
+    int left = calcLeafCount(root.left);
+    int right = calcLeafCount(root.right);
+    return left + right;
+}
+```
+
+#### 3、计算二叉树的高度
+
+**利用汇总的思想**
+
+```java
+public static int calcHeight(Node root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = calcHeight(root.left);
+    int right = calcHeight(root.right);
+    return Math.max(left,right) + 1;
+}
+```
+
+#### 4、计算二叉树第k层的节点个数
+
+ **第k层的节点数=第k-1层左孩子节点数+第k-1层右孩子节点数目，直到k==1时，说明已经到了第K层。** 
+
+```java
+// 第k层的节点数 = 第k-1层左孩子节点数 + 第k-1层右孩子节点数目，
+// 直到k==1时，说明已经到了第K层。
+public static int calcKLevel(Node root, int k) {
+    if (root == null) {
+        return 0;
+    }
+    if(k == 1) {
+        return 1;
+    }
+    int left = calcKLevel(root.left,k - 1);
+    int right = calcKLevel(root.right,k - 1);
+    return left + right;
+}
+```
+
+#### 5、二叉树的查找
+
+**过程：**
+
+> 首先判断根节点是不是要查找的值：如果是直接返回，如果不是,去左子树找，如果左子树找到了，就返回该引用，左子树没找到，则去右子树去查找，找到了，就返回该引用，都没有找到的话就返回null
+
+```java
+public static Node search(Node root, char val) {
+    if (root == null) {
+        return null;
+    }
+    if(root.value == val) {
+        return root;
+    }
+    Node left =  search(root.left,val);
+    if (left != null) {
+        return left;
+    }
+    Node right =  search(root.right,val);
+    if (right != null) {
+        return right;
+    }
+    return null;
+}
+```
+
+#### 6、判断两棵树是否镜像对称
+
+```java
+public static boolean isMirror(Node p, Node q) {
+    if (p == null && q == null) {
+        return true;
+    }
+    if (p == null || q == null) {
+        return false;
+    }
+
+    return p.value == q.value
+        && isMirror(p.left,q.right)
+        && isMirror(p.right,q.left);
+}
+```
+
+#### 7、根据 前序+中序 得到树
+
+```java
+// 前序 + 中序
+public static Node buildTree1(List<Character> preorder, List<Character> inorder) {
+    if (preorder.size() == 0) {
+        return null;
+    }
+    // 得到根节点的元素
+    char rootValue = preorder.get(0);
+    // 得到根节点随对应的下标值
+    int leftCount = inorder.indexOf(rootValue);
+    // 根节点
+    Node root = new Node(rootValue);
+    // 将 preorder序列 再根据根节点 分为 左边序列
+    List<Character> leftPreorder = preorder.subList(1,1+leftCount);
+    // 将 inorder序列 再根据根节点 分为 左边序列
+    List<Character> leftInorder = inorder.subList(0,leftCount);
+    Node left = buildTree1(leftPreorder,leftInorder);
+    root.left = left;
+
+    // 将 preorder序列 再根据根节点 分为 右边序列
+    List<Character> rightPreorder = preorder.subList(1+leftCount,preorder.size());
+    // 将 inorder序列 再根据根节点 分为 右边序列
+    List<Character> rightInorder = inorder.subList(leftCount+1,inorder.size());
+    Node right = buildTree1(rightPreorder,rightInorder);
+    root.right = right;
+
+    return root;
+}
+
+```
+
+
+
+```java
+public static TreeNode buildTreeArray(int[] inorder, int[] postorder) {
+    if (inorder.length == 0) {
+        return null;
+    }
+
+    int rootValue = postorder[postorder.length - 1];
+    int leftCount = -1;
+    for (int i = 0; i < inorder.length; i++) {
+        if (inorder[i] == rootValue) {
+            leftCount = i;
+        }
+    }
+
+    int[] leftInorder = Arrays.copyOfRange(inorder, 0, leftCount);
+    int[] leftPostorder = Arrays.copyOfRange(postorder, 0, leftCount);
+    int[] rightInorder = Arrays.copyOfRange(inorder, leftCount + 1, inorder.length);
+    int[] rightPostorder = Arrays.copyOfRange(postorder, leftCount, postorder.length - 1);
+
+    TreeNode root = new TreeNode();
+    root.val = rootValue;
+    root.left = buildTreeArray(leftInorder, leftPostorder);
+    root.right = buildTreeArray(rightInorder, rightPostorder);
+
+    return root;
+}
+
+```
+
+
+
+#### 8、层序遍历
+
+实现步骤：
+
+1. 创建队列,存储每一层的结点; 
+2. 使用循环从队列中弹出一个结点:
+   1.  获取当前结点的key ;
+   2.  如果当前结点的左子结点不为空,则把左子结点放入到队列中
+   3.  如果当前结点的右子结点不为空,则把右子结点放入到队列中
+
+```java
+public static void levelOrderTraversal(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.add(root);
+
+    while (!queue.isEmpty()) {
+        TreeNode front = queue.poll();
+
+        System.out.println(front.val);
+        if (front.left != null) {
+            queue.add(front.left);
+        }
+        if (front.right != null) {
+            queue.add(front.right);
+        }
+    }
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
