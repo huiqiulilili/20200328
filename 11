@@ -1,0 +1,38 @@
+package threadpool;
+
+
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class Test3 {
+    public static void main(String[] args) {
+        // 自定义线程池
+
+        // 最大线程到底该如何定义
+        // 1、CPU  密集型：几核就是几，可以保证CPU的效率最高
+        // 2、IO   密集型 > 判断你的程序中十分消耗IO的线程
+        // 获取CPU的核数
+        System.out.println(Runtime.getRuntime().availableProcessors());
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2,5,3,
+                TimeUnit.SECONDS,  new LinkedBlockingDeque<Runnable>(3),
+                Executors.defaultThreadFactory(),new ThreadPoolExecutor.DiscardOldestPolicy()); // 银行满了，好有人进来，不处理这个人的，抛出异常
+        try {
+            // 最大承载：队列 + max ,即 3 + 5
+            // 超出就会抛出 RejectedExecutionException
+            for (int i = 1; i <= 10; i++) {
+                threadPoolExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println(Thread.currentThread().getName()+" ok");
+                    }
+                });
+            }
+        }catch (Exception e ) {
+            e.printStackTrace();
+        }finally {
+            threadPoolExecutor.shutdown();
+        }
+        AtomicInteger a = new AtomicInteger();
+
+    }
+}
