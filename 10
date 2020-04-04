@@ -1,0 +1,15 @@
+package threadpool;
+
+
+import java.util.concurrent.ArrayBlockingQueue;
+
+public class TestQueue {
+    public static void main(String[] args) {
+        ArrayBlockingQueue<Integer> arrayQueue = new ArrayBlockingQueue<>(3);
+        arrayQueue.add(1);
+        arrayQueue.add(2);
+        arrayQueue.add(3);
+        System.out.println(arrayQueue.offer(4));
+        System.out.println(arrayQueue.peek());
+    }
+}
