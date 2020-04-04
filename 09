@@ -1,0 +1,49 @@
+package threadpool;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+public class Demo2 {
+public static void main(String[] args) {
+final Phone2 phone = new Phone2();
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            phone.call();
+        }
+    }, "B").start();
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        phone.sms();
+    }
+}, "A").start();
+
+}
+}
+
+class Phone2{
+    Lock lock = new ReentrantLock();
+    public void sms(){
+        lock.lock();
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + "sms");
+            call(); // 这里也有锁
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+            lock.unlock();
+        }
+    }
+    public void call(){
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + "call");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+}
