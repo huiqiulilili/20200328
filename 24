@@ -1,0 +1,43 @@
+package test.Main;
+
+import java.util.*;
+import java.util.Scanner;
+
+class Card implements Comparable<Card>{
+    int money = 0;
+    int count = 0;
+
+    public Card(int money, int count) {
+        this.money = money;
+        this.count = count;
+    }
+
+    public int compareTo(Card o) {
+        int n = count - o.count;
+        int m = n > 0 ? n : (money -o.money);
+        return m;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "money=" + money +
+                ", count=" + count +
+                '}';
+    }
+}
+public class Main3 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+
+        List<Card> list = new ArrayList<Card>() ;
+        for (int i = 0; i <n ; i++) {
+            Card card = new Card(scanner.nextInt(),scanner.nextInt());
+            scanner.nextLine();
+            list.add(card);
+
+        }
+        System.out.println(list);
+    }
+}
