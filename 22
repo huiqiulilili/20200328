@@ -1,0 +1,28 @@
+package threadSynchronizedtest2;
+
+public class TestDemo {
+    public static void main(String[] args) {
+        MyThread t = new MyThread();
+        new Thread(t, "黄牛A").start();
+        new Thread(t, "黄牛B").start();
+        new Thread(t, "黄牛C").start();
+    }
+}
+
+class MyThread implements Runnable{
+
+    private int tickets = 10;
+    @Override
+    public void run() {
+        synchronized (this) {
+            while (tickets > 0) {
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + ",还有" + tickets-- + "张票");
+            }
+        }
+    }
+}
