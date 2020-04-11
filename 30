@@ -1,0 +1,29 @@
+from selenium import webdriver
+import time
+
+brower = webdriver.Firefox()
+brower.get("http://www.baidu.com")
+
+brower.find_element_by_id("kw").send_keys("刘雨昕")
+brower.find_element_by_id("su").click()
+brower.set_window_size(400, 800)
+time.sleep(3)
+# 让浏览器滑倒最底端
+js = "var q=document.documentElement.scrollTop=100000"
+brower.execute_script(js)
+time.sleep(3)
+# 让浏览器滑倒最顶端
+js = "var q=document.documentElement.scrollTop=0"
+brower.execute_script(js)
+# time.sleep(4)
+# print(brower.title)
+# # 后退
+# brower.back()
+# time.sleep(4)
+# print(brower.title)
+# # 前进
+# brower.forward()
+# time.sleep(4)
+# brower.minimize_window()
+time.sleep(3)
+brower.quit()
