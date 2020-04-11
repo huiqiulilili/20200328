@@ -1,0 +1,20 @@
+from selenium import webdriver
+import time
+
+from selenium.webdriver.common.keys import Keys
+brower = webdriver.Firefox()
+brower.get("http://127.0.0.1/biz/user-login-L2Jpei8=.html")
+brower.maximize_window()
+time.sleep(3)
+
+brower.find_element_by_id("account").clear()
+brower.find_element_by_id("account").send_keys("admin")
+brower.find_element_by_id("account").send_keys(Keys.TAB)
+time.sleep(8)
+brower.find_element_by_name("password").send_keys("kylc55579*")
+time.sleep(8)
+brower.find_element_by_name("password").send_keys(Keys.ENTER)
+time.sleep(8)
+brower.quit()
+
+
