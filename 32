@@ -1,0 +1,19 @@
+from selenium import webdriver
+import time
+
+from selenium.webdriver.common.keys import Keys
+
+brower = webdriver.Firefox()
+brower.get("http://baidu.com")
+brower.find_element_by_id("kw").send_keys("刘雨昕")
+brower.find_element_by_id("su").submit()
+time.sleep(6)
+
+brower.find_element_by_id("kw").send_keys(Keys.CONTROL, 'a')
+time.sleep(3)
+
+brower.find_element_by_id("kw").send_keys(Keys.CONTROL, 'x')
+time.sleep(6)
+brower.quit()
+
+
