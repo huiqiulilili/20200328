@@ -1,0 +1,22 @@
+from selenium import webdriver
+import time
+brower = webdriver.Firefox()
+brower.get("https://www.baidu.com/")
+# brower.find_element_by_id("kw").send_keys("刘雨昕")
+# brower.find_element_by_id("su").submit()
+
+# time.sleep(10)
+# brower.implicitly_wait(10)
+# brower.find_element_by_link_text("刘雨昕_百度百科").click()
+
+
+# 打印 title
+t = brower.title
+print(t)
+
+# 打印 url
+url = brower.current_url
+print(url)
+
+time.sleep(8)
+brower.quit()
