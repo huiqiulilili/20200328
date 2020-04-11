@@ -1,0 +1,12 @@
+from selenium import webdriver
+import time
+
+brower = webdriver.Firefox()
+brower.get("http://www.baidu.com")
+time.sleep(8)
+brower.maximize_window()
+time.sleep(8)
+
+brower.set_window_size(400, 800)
+time.sleep(8)
+brower.quit()
