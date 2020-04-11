@@ -1,0 +1,21 @@
+from selenium import webdriver
+import time
+
+brower = webdriver.Firefox()
+time.sleep(3)
+brower.get("https://www.baidu.com")
+time.sleep(3)
+
+# brower.find_element_by_id("kw").send_keys("刘雨昕")
+# brower.find_element_by_id("su").submit()
+# time.sleep(8)
+#
+# brower.find_element_by_id("kw").clear()
+# brower.find_element_by_id("kw").send_keys("陆柯燃")
+# brower.find_element_by_id("su").submit()
+
+tests = brower.find_element_by_id("bottom_layer").text
+print(tests)
+
+time.sleep(8)
+brower.quit()
