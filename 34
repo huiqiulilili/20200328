@@ -1,0 +1,27 @@
+package 牛客网;
+
+public class Test01 {
+    public boolean Find(int target, int [][] array) {
+        int rows = array.length;
+        if(rows == 0) {
+            return false;
+        }
+        int clos = array[0].length;
+        if(clos == 0) {
+            return false;
+        }
+        // 左下
+        int row = rows - 1;
+        int clo = 0;
+        while (row >= 0 && clo < clos) {
+            if(array[row][clo] < target) {
+                clo ++;
+            }else if(array[row][clo] > target) {
+                row --;
+            }else {
+                return true;
+            }
+        }
+        return false;
+    }
+}
