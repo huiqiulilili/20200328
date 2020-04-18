@@ -1,0 +1,10 @@
+# coding = utf-8
+import time
+from selenium import webdriver
+
+driver = webdriver.Firefox()  # 打开火狐浏览器
+# driver = webdriver.Chrome()   # 打开Chrome
+driver.get('https://www.iqiyi.com/v_19rydnhuu8.html?list=19rqwnifvi')    #打开地址
+time.sleep(80)    #睡眠60s
+driver.refresh()    #刷新打开的页面
+driver.close()     #关闭浏览器
