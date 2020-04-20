@@ -1,0 +1,15 @@
+# 类和对象
+
+class Person:
+    def __init__(self, name, sex, birthday):
+        self.name = name
+        self.sex = sex
+        self.birthday = birthday
+
+    def say(self, word):
+        print(f'{self.name}说：“{word}”')
+
+zhang_san = Person('张三', '男', '20200202')
+li_si = Person('李四', '女', '20200202')
+zhang_san.say("你好")
+li_si.say("hello")
