@@ -1,0 +1,20 @@
+# 文件操作
+
+# 读
+# f = open('test1', encoding='utf-8')
+# s = f.read()
+# print(s)
+# f.close()
+
+# 文件写入：write
+# f = open('test1', mode='w', encoding='utf-8')
+# f.write("林凡\n")
+# f.write("孔雪儿\n")
+# f.close()
+
+#
+# import random
+# print(random.randint(1,5))
+
+
+
