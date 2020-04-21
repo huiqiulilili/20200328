@@ -1,0 +1,15 @@
+from selenium import webdriver
+from time import sleep
+import os
+driver = webdriver.Firefox()
+driver.implicitly_wait(30)
+file_path = "file:///C:/Users/惠秋丽/Desktop/e.html"
+driver.get(file_path)
+#driver.get('file:///D:/PycharmProjects/test/send.html')
+#点击“请点击”
+driver.find_element_by_xpath("/html/body/input").click()
+#输入内容
+driver.switch_to.alert.send_keys('webdriver')
+driver.switch_to.alert.accept()
+sleep(5)
+driver.quit()
