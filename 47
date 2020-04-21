@@ -1,0 +1,12 @@
+#coding=utf-8
+from selenium import webdriver
+import os,time
+driver = webdriver.Firefox()
+# 脚本要与upload_file.html 同一目录
+file_path = "file:///C:/Users/%E6%83%A0%E7%A7%8B%E4%B8%BD/Desktop/g.html"
+driver.get(file_path)
+
+# 定位上传按钮，添加本地文件
+driver.find_element_by_name("file").send_keys('C:/Users/惠秋丽/Desktope.html')
+time.sleep(2)
+driver.quit()
