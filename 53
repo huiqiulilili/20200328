@@ -1,0 +1,47 @@
+package com.hui.pojo;
+
+import java.util.List;
+
+public class UserTT {
+    private String name;
+
+    private List<User> userList;
+
+//    public UserTT(String name) {
+//        this.name = name;
+//    }
+
+
+    public UserTT() {
+    }
+
+    public UserTT(String name, List<User> userList) {
+        this.name = name;
+        this.userList = userList;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTT{" +
+                "name='" + name + '\'' +
+                ", userList=" + userList +
+                '}';
+    }
+}
