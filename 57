@@ -1,0 +1,23 @@
+import com.hui.pojo.User;
+import com.hui.pojo.UserT;
+import com.hui.pojo.UserTT;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MyTest {
+    public static void main(String[] args) {
+
+        // Spring 容器，就类似于婚介网站
+        ApplicationContext context = new ClassPathXmlApplicationContext("applications.xml");
+//        User user  = (User) context.getBean("user");
+//        User user2  = (User) context.getBean("user");
+//        System.out.println(user == user2);
+//        user.show();
+
+//        UserTT userTT = (UserTT) context.getBean("userTT");
+//        System.out.println(userTT);
+
+        UserT userT = (UserT)context.getBean("u4");
+        userT.show();
+    }
+}
