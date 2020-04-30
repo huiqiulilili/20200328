@@ -1,0 +1,25 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Test {
+    public int lengthOfLongestSubstring (String s) {
+        // write code here
+        int len = s.length();
+        int max = 0;
+
+        for(int i = 0;i < len; i++) {
+            Map<Character,Integer> map = new HashMap<Character, Integer>();
+            for(int j = i ;j < len; j ++) {
+                if(map.containsKey(s.charAt(j))) {
+                    break;
+                }else {
+                    map.put(s.charAt(j),1);
+                }
+                if(map.size() > max) {
+                    max = map.size();
+                }
+            }
+        }
+        return max;
+    }
+}
